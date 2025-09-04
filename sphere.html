@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Particle Ring</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./circumvent.js"></script>
+    
+    <style>
+      body {background-color:black}
+      
+      #redBox {
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        left: 100px;
+        top: 300px;
+        background-image: url("https://cdn.glitch.me/f9f27f3e-3a68-488c-9312-69650670509f%2Fimages.png?v=1636212025263");
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+      }
+      
+      .object {
+        width: 10px;
+        height: 10px;
+        background-color: #f60;
+        position: absolute;
+        left: 550px;top:400px;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body id="body">
+    
+    <script>
+      var arr = [], num = 0, t = 0;
+      setInterval(create, 40);
+      
+      function create() {
+        if (num < 400) {
+          $("body").append("<div id='obj" + num + "' onclick='arr[" + num + "].changeColor()'></div>")
+          arr.push(new obj(document.getElementById("obj"+num)))
+          num++
+        }
+        t++
+        for (var i = 0;i<num;i++) {arr[i].move();}
+      }
+      
+      
+      function obj(ID) {
+        let id = ID
+        let x = 0, y = 0
+        id.classList.add("object")
+        
+        this.move = () => {
+          $turnRight(id, 0.1)
+          x += Math.sin($removeLabel(id.style.transform))*16 + (((Math.random())*6) - 3)
+          y += Math.cos($removeLabel(id.style.transform))*16 + (((Math.random())*6) - 3)
+          id.style.left = (x*Math.sin($toRadians(t))) + 500 + "px"
+          id.style.top = (y*Math.cos($toRadians(t))) + 370 + "px"
+        }
+        
+        this.changeColor = () => {
+          id.style.backgroundColor = "#0aa"
+        }
+      }
+    </script>
+  </body>
+</html>
